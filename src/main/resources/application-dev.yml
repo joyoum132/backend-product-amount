@@ -20,6 +20,16 @@ spring:
         springframework.web: debug
   sql:
     init:
-      schema-locations: classpath*:/${database}/schema.sql
+#      schema-locations: classpath*:/${database}/schema.sql
       data-locations: classpath*:/${database}/data.sql
       platform: h2
+
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    defer-datasource-initialization: true
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
