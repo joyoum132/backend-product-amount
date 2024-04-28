@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 
 @Entity
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class PromotionProducts {
@@ -19,4 +20,9 @@ public class PromotionProducts {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
+
+    public PromotionProducts(Promotion promotion, Product product) {
+        this.promotion = promotion;
+        this.product = product;
+    }
 }
