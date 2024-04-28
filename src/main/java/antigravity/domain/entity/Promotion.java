@@ -48,4 +48,13 @@ public class Promotion {
     public enum DiscountType{
         PERCENT, WON
     }
+
+    public Promotion(PromotionType promotion_type, String name, DiscountType discount_type, int discount_value, LocalDate use_started_at, LocalDate use_ended_at) {
+        this.promotion_type = promotion_type;
+        this.name = name;
+        this.discount_type = discount_type;
+        this.discount_value = discount_value;
+        this.use_started_at = use_started_at;
+        this.use_ended_at = use_ended_at;
+    }
 }

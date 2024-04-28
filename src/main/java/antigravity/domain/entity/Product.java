@@ -32,4 +32,8 @@ public class Product {
     public boolean isValidRange () {
         return price >= 1000 && price <= 10000000;
     }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
 }
