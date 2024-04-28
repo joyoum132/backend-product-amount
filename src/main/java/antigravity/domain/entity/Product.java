@@ -29,7 +29,7 @@ public class Product {
         this.price = price;
     }
 
-    public boolean isValidRange () {
+    public boolean isValidRange() {
         return price >= 1000 && price <= 10000000;
     }
 

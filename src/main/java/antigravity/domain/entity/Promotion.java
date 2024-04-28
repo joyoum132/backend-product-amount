@@ -41,11 +41,11 @@ public class Promotion {
     @Comment("쿠폰 사용가능 종료 기간")
     private LocalDate use_ended_at;
 
-    public enum PromotionType{
+    public enum PromotionType {
         CODE, COUPON
     }
 
-    public enum DiscountType{
+    public enum DiscountType {
         PERCENT, WON
     }
 
