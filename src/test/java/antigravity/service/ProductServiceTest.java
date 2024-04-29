@@ -204,4 +204,38 @@ class ProductServiceTest {
         Assertions.assertEquals(res.getFinalPrice(), 328000);
     }
 
+
+    @Test
+    @DisplayName("파라미터 검증")
+    void 요청_파라미터_검증() {
+        ProductInfoRequest idIsNull = ProductInfoRequest.builder()
+                .productId(null)
+                .couponIds(List.of(1L, 2L))
+                .build();
+
+        ProductInfoRequest isIsNegative = ProductInfoRequest.builder()
+                .productId(-1L)
+                .couponIds(List.of(1L, 2L))
+                .build();
+
+        ProductInfoRequest couponIsEmpty = ProductInfoRequest.builder()
+                .productId(1L)
+                .couponIds(List.of())
+                .build();
+
+        Assertions.assertThrows(
+                BadRequestException.class,
+                () -> productService.getProductAmount(idIsNull)
+        );
+
+        Assertions.assertThrows(
+                BadRequestException.class,
+                () -> productService.getProductAmount(isIsNegative)
+        );
+
+        Assertions.assertThrows(
+                BadRequestException.class,
+                () -> productService.getProductAmount(couponIsEmpty)
+        );
+    }
 }

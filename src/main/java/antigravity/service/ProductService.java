@@ -5,6 +5,7 @@ import antigravity.config.exception.NotFoundException;
 import antigravity.domain.entity.Product;
 import antigravity.domain.entity.Promotion;
 import antigravity.domain.entity.PromotionProducts;
+import antigravity.model.Validation;
 import antigravity.model.request.ProductInfoRequest;
 import antigravity.model.response.ProductAmountResponse;
 import antigravity.repository.ProductRepository;
@@ -29,6 +30,12 @@ public class ProductService {
         // 3. 상품의 프로모션 조회 (기간 체크 필수)
         // 4. 프로모션 적용 시 percent -> won 순서로 적용
         // 5. return 전에 천원단위로 절삭
+
+        if(Validation.isNull(request.getProductId())
+                || Validation.isNegative(request.getProductId())
+                || Validation.isEmptyList(request.getCouponIds())) {
+            throw new BadRequestException("요청 파라미터 값을 확인해주세요");
+        }
 
         long productId = request.getProductId();
         Product product = productRepository.findById(productId)
