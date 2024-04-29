@@ -8,7 +8,10 @@
 - request 의 모든 쿠폰이 만료되었거나 사용할 수 없다면 exception
 - request 의 쿠폰 중 하나라도 적용 가능하다면 가격 계산
 - `금액 할인`과 `% 할인`이 섞여있다면 `% 할인`을 먼저 적용
+  - 전략 패턴을 사용하여 할인 금액 계산
 - Exception 발생 시 상태 코드를 구분하고, 일괄적인 응답을 내려주기 위해 RestControllerAdvice 사용
+- 서비스 로직에서 request DTO 검증을 위해 Validation 클래스 생성 
+  - Controller 에서 1차 필터링 할 수 있도록 DTO 에 constraints 어노테이션 추가
 
 ## 기존 코드 변경 내용
 - 도메인을 엔티티로 변경하면서 id를 int -> Long 타입으로 변환했고, ProductInfoRequest 의 자료형도 이에 맞게 변경함
@@ -35,3 +38,5 @@
   - applyPromotion 동작 확인
 - 사용 가능한 프로모션 조회
   - 쿼리가 의도대로 동작하는지 확인
+- 파라미터 검증
+  - request 파라미터에 대해 필수값의 존재, 값 범위 등을 검증하는 테스트 
