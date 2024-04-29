@@ -9,6 +9,7 @@ import antigravity.model.request.ProductInfoRequest;
 import antigravity.model.response.ProductAmountResponse;
 import antigravity.repository.ProductRepository;
 import antigravity.repository.PromotionProductsRepository;
+import antigravity.strategy.discount.DiscountStrategy;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -62,17 +63,8 @@ public class ProductService {
     int applyPromotion(Product product, List<Promotion> promotions) {
         int price = product.getPrice();
         for (Promotion promotion : promotions) {
-            switch (promotion.getDiscount_type()) {
-                case PERCENT -> {
-                    double target = (100-promotion.getDiscount_value()) / 100.0;
-                    price *= target;
-                }
-                case WON -> {
-                    if(price > promotion.getDiscount_value()) {
-                        price -= promotion.getDiscount_value();
-                    }
-                }
-            }
+            DiscountStrategy discountStrategy = promotion.getDiscountStrategy();
+            price = discountStrategy.applyDiscount(price, promotion.getDiscount_value());
         }
         return price;
     }

@@ -1,5 +1,8 @@
 package antigravity.domain.entity;
 
+import antigravity.strategy.discount.DiscountStrategy;
+import antigravity.strategy.discount.WithPercent;
+import antigravity.strategy.discount.WithWon;
 import lombok.*;
 import org.hibernate.annotations.Comment;
 
@@ -49,6 +52,9 @@ public class Promotion {
         PERCENT, WON
     }
 
+    @Transient
+    private DiscountStrategy discountStrategy;
+
     public Promotion(PromotionType promotion_type, String name, DiscountType discount_type, int discount_value, LocalDate use_started_at, LocalDate use_ended_at) {
         this.promotion_type = promotion_type;
         this.name = name;
@@ -57,4 +63,12 @@ public class Promotion {
         this.use_started_at = use_started_at;
         this.use_ended_at = use_ended_at;
     }
+
+    public DiscountStrategy getDiscountStrategy() {
+        return switch (this.discount_type) {
+            case PERCENT -> new WithPercent();
+            case WON -> new WithWon();
+        };
+    }
+
 }
